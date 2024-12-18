@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .food-item {
+            display: inline-block;
+            width: 200px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-item img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .food-item h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .food-item p {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .add-to-cart {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #45a049;
+        }
+
+        .cart {
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart-items li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Food Menu</h1>
+        <div class="food-item">
+            <img src="buger.jpg" alt="Burger">
+            <h3>Burger</h3>
+            <p>$5.99</p>
+            <button class="add-to-cart" data-name="Burger" data-price="5.99">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img src="pizza.jpg" alt="Pizza">
+            <h3>Pizza</h3>
+            <p>$8.99</p>
+            <button class="add-to-cart" data-name="Pizza" data-price="8.99">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img src="pasta.jpg" alt="Pasta">
+            <h3>Pasta</h3>
+            <p>$7.49</p>
+            <button class="add-to-cart" data-name="Pasta" data-price="7.49">Add to Cart</button>
+        </div>
+        <div class="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <p>Total: $<span id="total-price">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cartItemsList = document.getElementById('cart-items');
+            const totalPriceElement = document.getElementById('total-price');
+            let cart = [];
+
+            // Handle 'Add to Cart' button click
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const itemName = this.getAttribute('data-name');
+                    const itemPrice = parseFloat(this.getAttribute('data-price'));
+
+                    // Add item to cart array
+                    cart.push({ name: itemName, price: itemPrice });
+
+                    // Update the cart display
+                    updateCart();
+                });
+            });
+
+            // Update the cart's displayed items and total price
+            function updateCart() {
+                cartItemsList.innerHTML = ''; // Clear the list
+                let total = 0;
+
+                cart.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                    cartItemsList.appendChild(listItem);
+                    total += item.price;
+                });
+
+                totalPriceElement.textContent = total.toFixed(2); // Update total price
+            }
+        });
+
+    </script>
+</body>
+
+</html>
